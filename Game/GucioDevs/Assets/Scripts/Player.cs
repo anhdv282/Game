@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
 	public bool canDoubleJump;
 
 	public int curHealth;
-	public int maxHealth = 100;
+	public int maxHealth = 5;
 
 	private Rigidbody2D rb2d;
 	private Animator anim;
@@ -82,8 +82,12 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Damage (int dmg) {
-		curHealth -= dmg;
-		gameObject.GetComponent<Animation> ().Play ("Player_Flash");
+		if (curHealth <= dmg) {
+			Die ();
+		} else {
+			curHealth -= dmg;
+		}
+		gameObject.GetComponent<Animation> ().Play ("Player_RedFlash");
 	}
 
 	public IEnumerator KnockBack(float knockDur, float knockbackPwr, Vector3 knockbackDir) {
